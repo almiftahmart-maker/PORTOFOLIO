@@ -1,1 +1,36 @@
- 
+RewriteEngine On
+
+# ==========================================
+# 1. HALAMAN ERROR CUSTOM
+# Mengarahkan error 404 (Not Found) dan 403 (Forbidden/Dilarang) ke 404.php
+# ==========================================
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+
+# ==========================================
+# 2. MENGHILANGKAN EKSTENSI .PHP
+# Mengubah namadomain.com/api_stats.php menjadi namadomain.com/api_stats
+# ==========================================
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^\.]+)/?$ $1.php [NC,L]
+
+# ==========================================
+# 3. KEAMANAN: BLOKIR AKSES KE FILE .ENV
+# ==========================================
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ==========================================
+# 4. KEAMANAN: BLOKIR AKSES KE FOLDER MVC
+# Mencegah orang membuka folder config, controllers, models, views
+# ==========================================
+RewriteRule ^(config|controllers|models|views) - [F,L]
+
+# ==========================================
+# 5. MATIKAN FITUR DIRECTORY BROWSING
+# Mencegah orang melihat daftar file
+# ==========================================
+Options -Indexes

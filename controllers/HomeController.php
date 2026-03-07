@@ -5,18 +5,18 @@ require_once __DIR__ . '/../models/StatModel.php';
 
 class HomeController {
     public function index() {
-        // 1. Inisialisasi koneksi ke Database
+        // Inisialisasi koneksi ke Database
         $database = new Database();
         $db = $database->getConnection();
 
-        // 2. Panggil Model untuk urusan statistik
+        // Panggil Model untuk urusan statistik
         $statModel = new StatModel($db);
         
-        // 3. Jalankan logika penghitung jumlah view
+        // Jalankan logika penghitung jumlah view
         $statModel->addPageView();
         $totalViews = $statModel->getTotalViews();
 
-        // 4. Data Project Portofolio
+        // Data Project Portofolio
         $projects = [
             
             [
@@ -56,8 +56,12 @@ class HomeController {
             ]
         ];
 
-        // 5. Kirim semua data di atas ke file View
+        // Kirim semua data di atas ke file View
         require_once __DIR__ . '/../views/home.php';
+    }
+    public function monitor() {
+        // Langsung panggil view monitor.php
+        require_once __DIR__ . '/../views/monitor.php';
     }
 }
 ?>
